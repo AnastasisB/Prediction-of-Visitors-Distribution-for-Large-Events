@@ -1,0 +1,139 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jun 12 19:51:53 2018
+
+@author: spele
+"""
+def combine_all(data,pois_to_clusters,t11, t12, t21, t22,
+                           artist_metrics,cluster,minutes,only_start='No',years='all'):
+    from artists_period import create_artist
+    import pandas as pd
+    import numpy as np
+    #define cluster distribution per period in the different clusters created
+
+    final1 = cluster.cluster_distribution_per_period(data, min_users_per_period = 0)
+
+    #create data structure of artist presence and popularity in clusters
+    artists = create_artist(timestep=minutes, df=pois_to_clusters,only_start=only_start)
+
+    if years != 'all':
+        artists = artists[[(years in artists.index[k][0]) for k in range(len(artists))]]
+
+    #I add the word pop for popularity next to the cluster name to identify the popularity
+    #metric column of the artist that is performing at the corrrespondent cluster
+    keys = list(artists.columns.values)
+    fu = lambda x:x+"pop"
+    if not(artist_metrics):#here i try to get rid of the metrics and just use the presence of the artists
+        fu2 = lambda x:0 if x==0 else 1
+        for key in keys:
+            artists[key] = artists[key].apply(fu2)
+    values = list(map(fu,keys))
+    dictionary = dict(zip(keys,values))
+    artists = artists.rename(index=str, columns=dictionary)
+    artists = artists.set_index(final1.index)
+    #I concat to the training data
+    frames = [final1,pd.DataFrame(artists,columns=list(artists.columns.values))]
+    final1 = pd.concat(frames, axis = 1)
+
+    final1[['Date', 'Period']] = final1['Period'].apply(pd.Series)
+
+    #introducing extra col for time index and TS forecasting and year
+    a = []
+    year = []
+    for index, row in final1.iterrows():
+        a.append(row['Date'] +' '+row['Period'][:8])
+        year.append(row['Date'][:4])
+
+    final1['Time series dates']=a
+    final1['Year'] =year
+
+    #######################          TIME FILTERS         ########################
+
+    from defs import df_filtering
+    filterer = df_filtering(final1)
+    final1 = filterer.df_column_bounding(column_id='Period',lower_bound= t11+' to '+t12, upper_bound=t21+' to '+t22)
+    if years!='all':
+        final1 = filterer.df_column_bounding(column_id='Year',lower_bound=years, upper_bound=years)
+
+#    #i use this temp dataframe to create some new lines in the begining of final1
+#    #because first day starts from 5am not 12am so I fill with zeros at the beginning
+#    if len(dates)>len(final1):
+#        d = pd.DataFrame(np.zeros((len(dates)-len(final1), len(final1.columns))),columns=final1.columns)
+#        final1=pd.concat([d,final1]).reset_index()
+#        final1.drop("index",inplace=True,axis=1)
+#    frames = [dates,final1]
+#    final1 = pd.concat(frames, axis = 1)
+    periods = final1.groupby(['Period']).size().index.tolist()
+    period_indexes = list(range(len(periods)))
+    dictionary3 = dict(zip(periods,period_indexes))
+    final1['Time index'] = final1['Period'].map(lambda x:dictionary3[x])
+
+    days = final1.groupby(['Date']).size().index.tolist()
+    day_indexes = list(range(len(days)))
+    day_indexes = list(x % 3 for x in day_indexes)
+    dictionary2 = dict(zip(days,day_indexes))
+    final1['Day index'] = final1['Date'].map(lambda x:dictionary2[x])
+
+#    final1.rename(columns={"index": "Time index"},inplace=True)
+    #sort final1
+    columns = list(final1.columns[1:].values)
+    columns2= ['Date','Day index','Time index','Time series dates', 'Year']
+    columns.remove('Date')
+    columns.remove('Day index')
+    columns.remove('Time index')
+    columns.remove('Time series dates')
+    columns.remove('Year')
+    columns.sort()
+    columns2.sort()
+    cols=np.concatenate([columns,columns2])
+    final1 = final1[cols]
+    #locate most significant cluster
+    cltopred = str(final1.iloc[:,:-6].sum(axis=0).idxmax()).upper()
+    #locate clusters with live shows
+    clwithlive = list(dictionary.keys())
+    print("\nClusters with live shows:", clwithlive)
+    print("Most significant cluster = ", cltopred)
+
+    # =============================================================================
+    # CREATE WEATHER COLUMNS
+    # =============================================================================
+    periods = final1["Time series dates"].tolist()
+    data = pd.read_csv('weather_history.csv')
+    temp = []
+    conditions = []
+    data["Time (GMT)"] = pd.to_datetime(data["Time (GMT)"])
+    data["Time (GMT)"] = data["Time (GMT)"].dt.strftime("%Y-%m-%d %H:%M:%S")
+
+    def check_user(line):
+        for i in range(0,len(data)):
+            if (periods[line] >= data["Time (GMT)"].iloc[i] and periods[line] < data["Time (GMT)"].iloc[i+1]):
+                temp.append(data["Temp."].iloc[i])
+                conditions.append(data["Conditions"].iloc[i])
+                break
+
+    for j in range(len(periods)):
+        check_user(j)
+
+
+    df = pd.DataFrame({'Temperature' : temp, 'Conditions' : conditions, 'Periods' : periods})
+    df.set_index('Periods', inplace = True)
+
+    #    cond = list(df['Conditions'].unique())
+    #    cond_dict = {el:0 for el in cond}
+    import yaml
+    #    with open('cond_dict.yml', 'w') as outfile:
+    #        yaml.dump(cond_dict, outfile, default_flow_style=False)
+    with open('cond_dict.yml', 'r') as stream:
+        cond_dict = yaml.load(stream)
+
+
+
+    df.reset_index(drop=True, inplace=True)
+    df['Temperature'] = df['Temperature'].apply(lambda x: int(x[:2]))
+    df['Conditions'] = df['Conditions'].apply(lambda x: cond_dict[x])
+
+    final1['Temperature'] = df['Temperature']
+    final1['Conditions'] = df['Conditions']
+
+
+    return final1, cltopred, clwithlive

@@ -1,0 +1,5 @@
+,A,B,C,D,E,F
+mult_RF,+time,+time_pops,+time_temp/cond,+time_pops,+time_pops_temp/cond,+time_pops
+mult_KNN,+time,+time_pops,+time,+time,+time_pops,+time
+mult_SVC,+time_temp/cond,+time_pops_temp/cond,+time,+time_temp/cond,+time,+time_pops_temp/cond
+mult_NB,+time_pops_temp/cond,+time_pops_temp/cond,+time,+time,+time_temp/cond,+time

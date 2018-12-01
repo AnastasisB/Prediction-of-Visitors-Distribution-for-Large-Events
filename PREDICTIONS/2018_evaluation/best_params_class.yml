@@ -1,0 +1,119 @@
+mult_KNN:
+  A:
+    class__estimator__n_neighbors: 29
+    class__estimator__weights: distance
+  B:
+    class__estimator__n_neighbors: 15
+    class__estimator__weights: uniform
+  C:
+    class__estimator__n_neighbors: 13
+    class__estimator__weights: uniform
+  D:
+    class__estimator__n_neighbors: 10
+    class__estimator__weights: uniform
+  E:
+    class__estimator__n_neighbors: 30
+    class__estimator__weights: uniform
+  F:
+    class__estimator__n_neighbors: 25
+    class__estimator__weights: distance
+mult_NB:
+  A: {}
+  B: {}
+  C: {}
+  D: {}
+  E: {}
+  F: {}
+mult_RF:
+  A:
+    class__estimator__max_depth: 8
+    class__estimator__min_samples_leaf: 1
+    class__estimator__n_estimators: 26
+  B:
+    class__estimator__max_depth: 9
+    class__estimator__min_samples_leaf: 4
+    class__estimator__n_estimators: 26
+  C:
+    class__estimator__max_depth: 9
+    class__estimator__min_samples_leaf: 2
+    class__estimator__n_estimators: 20
+  D:
+    class__estimator__max_depth: 14
+    class__estimator__min_samples_leaf: 2
+    class__estimator__n_estimators: 16
+  E:
+    class__estimator__max_depth: 16
+    class__estimator__min_samples_leaf: 4
+    class__estimator__n_estimators: 16
+  F:
+    class__estimator__max_depth: 9
+    class__estimator__min_samples_leaf: 1
+    class__estimator__n_estimators: 30
+mult_SVC:
+  A:
+    class__estimator__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - &id001 !!python/object/apply:numpy.dtype
+      args:
+      - f8
+      - 0
+      - 1
+      state: !!python/tuple
+      - 3
+      - <
+      - null
+      - null
+      - null
+      - -1
+      - -1
+      - 0
+    - !!binary |
+      SIefCNDa3j8=
+    class__estimator__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      6iYxCKwcuj8=
+  B:
+    class__estimator__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      ascKhJF25D8=
+    class__estimator__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      6iYxCKwcuj8=
+  C:
+    class__estimator__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+    class__estimator__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      /Knx0k1iUD8=
+  D:
+    class__estimator__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      9s6Ag+SI7j8=
+    class__estimator__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      6iYxCKwcuj8=
+  E:
+    class__estimator__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      Dz8RoLW9BkA=
+    class__estimator__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      6iYxCKwcuj8=
+  F:
+    class__estimator__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      MMvFA7t/6T8=
+    class__estimator__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      6iYxCKwcuj8=

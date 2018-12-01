@@ -1,0 +1,167 @@
+mult_KNN:
+  A:
+    class__n_neighbors: 5
+    class__weights: distance
+  B:
+    class__n_neighbors: 7
+    class__weights: distance
+  C:
+    class__n_neighbors: 7
+    class__weights: distance
+  D:
+    class__n_neighbors: 26
+    class__weights: uniform
+  E:
+    class__n_neighbors: 7
+    class__weights: distance
+  F:
+    class__n_neighbors: 8
+    class__weights: distance
+mult_KR:
+  A:
+    class__alpha: !!python/object/apply:numpy.core.multiarray.scalar
+    - &id001 !!python/object/apply:numpy.dtype
+      args:
+      - f8
+      - 0
+      - 1
+      state: !!python/tuple
+      - 3
+      - <
+      - null
+      - null
+      - null
+      - -1
+      - -1
+      - 0
+    - !!binary |
+      mpmZmZmZuT8=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  B:
+    class__alpha: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      pB0rEEba4T8=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  C:
+    class__alpha: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      /p5b4tTv2T8=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  D:
+    class__alpha: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      pB0rEEba4T8=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  E:
+    class__alpha: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      ymsor6G85j8=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  F:
+    class__alpha: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      sgJhpB0r0D8=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+mult_RF:
+  A:
+    class__max_depth: 16
+    class__min_samples_leaf: 4
+    class__n_estimators: 16
+  B:
+    class__max_depth: 6
+    class__min_samples_leaf: 4
+    class__n_estimators: 16
+  C:
+    class__max_depth: 3
+    class__min_samples_leaf: 2
+    class__n_estimators: 10
+  D:
+    class__max_depth: 13
+    class__min_samples_leaf: 1
+    class__n_estimators: 13
+  E:
+    class__max_depth: 11
+    class__min_samples_leaf: 1
+    class__n_estimators: 30
+  F:
+    class__max_depth: 3
+    class__min_samples_leaf: 4
+    class__n_estimators: 16
+mult_SVR:
+  A:
+    class__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      AAAAAAAACEA=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  B:
+    class__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      AAAAAAAACEA=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  C:
+    class__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      AAAAAAAACEA=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  D:
+    class__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      AAAAAAAACEA=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  E:
+    class__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      AAAAAAAACEA=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
+  F:
+    class__C: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      Dz8RoLW9BkA=
+    class__gamma: !!python/object/apply:numpy.core.multiarray.scalar
+    - *id001
+    - !!binary |
+      exSuR+F6hD8=
